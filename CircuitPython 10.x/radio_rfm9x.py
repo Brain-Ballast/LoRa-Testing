@@ -25,7 +25,7 @@ import adafruit_rfm9x
 CS = DigitalInOut(board.CE1)
 RESET = DigitalInOut(board.D25)
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0, 115200)
 rfm9x.tx_power = 23
 prev_packet = None
 packet_count = 0
