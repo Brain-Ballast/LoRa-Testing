@@ -39,6 +39,6 @@ while True:
     else:
         prev_packet = packet
         packet_text = str(prev_packet, "utf-8")
-        print("Received (RSSI: {0} dB): {1}".format(rfm9x.rssi, packet_text))
+        print("Received :", packet_text)
         time.sleep(1)
     time.sleep(0.1)
