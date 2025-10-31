@@ -72,6 +72,7 @@ while True:
         packet_text = str(prev_packet, "utf-8")
         display.text('RX: ', 0, 0, 1)
         display.text(packet_text, 25, 0, 1)
+        print("Received (RSSI: {0} dB): {1}".format(rfm9x.rssi, packet_text))
         time.sleep(1)
 
     if not btnA.value:
