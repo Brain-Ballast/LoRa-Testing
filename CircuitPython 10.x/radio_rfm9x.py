@@ -28,6 +28,7 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
 rfm9x.tx_power = 23
 prev_packet = None
+packet_count = 0
 
 while True:
     packet = None
@@ -38,7 +39,15 @@ while True:
         print("Waiting for PKT...")
     else:
         prev_packet = packet
-        packet_text = str(prev_packet, "utf-8")
-        print("Received :", packet_text)
-        time.sleep(1)
-    time.sleep(0.1)
+        packet_count += 1
+        try:
+            packet_text = str(prev_packet, "utf-8")
+            print(f"Received #{packet_count}: {packet_text}")
+        except UnicodeDecodeError:
+            print(f"Received #{packet_count}: [Raw bytes] {prev_packet}")
+        
+        # Don't sleep after receiving - immediately check for more packets
+        continue
+    
+    # Only sleep when no packet received to avoid blocking reception
+    time.sleep(0.01)  # Much shorter sleep for better responsiveness
